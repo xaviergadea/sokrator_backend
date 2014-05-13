@@ -1,0 +1,36 @@
+<div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li class="active"><a href="#">Overview</a></li>
+            <li><a href="/user">Usuaris</a></li>            
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+               <form role="form" action="/user" method="post">
+                  <div class="form-group">
+                    <label for="exampleInputNom">Nom personal</label>
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Nom">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Nom usuari (email)</label>
+                    <input type="email" class="form-control" id="userName" name="userName" placeholder="Usuari (Email)">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>                      
+                    <input type="password" class="form-control" id="userPwd" name="userPwd" placeholder="Password">
+                  </div>  
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Data naixement</label>                      
+                    <input type="date" class="form-control" id="birthdate" name="birthdate" placeholder="Data naixement">
+                  </div>                   
+                   <div class="checkbox">
+                    <label for="isAdmin">Admintrador</label>
+                      <input type="checkbox" name="isAdmin"> 
+                    </label>
+                  </div>                   
+                  <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            
+        </div>
+    </div>
+</div>

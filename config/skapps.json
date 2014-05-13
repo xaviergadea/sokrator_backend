@@ -1,0 +1,12 @@
+{
+  "facebook": {
+    "name":"Facebook",
+    "image": "icFacebook.png",
+    "description": "1234"
+  },
+   "twitter": {
+    "name":"Twitter",
+    "image": "icTwitter.png",
+    "token": "1234"
+  }
+}

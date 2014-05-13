@@ -1,0 +1,10 @@
+extends ../../../layouts/main
+
+block content
+  h1 Usuarios
+ 
+  ol
+    each user, i in users
+      li
+        span #{user.name} 
+        a(href="/user/edit/"+user.id)  editar

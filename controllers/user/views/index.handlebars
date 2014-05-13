@@ -1,0 +1,26 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <a href="/user/new" class="btn btn-primary" role="button">Nou usuari</a>
+    <table class="table table-striped">
+      <thead>
+        <tr>      
+          <th>Nom personal</th>
+          <th>Nom usuari</th>
+          <th>Data</th>
+          <th>Administrador</th>
+          <th>#</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each userview}}            
+        <tr>
+          <td>{{name}}</td>
+          <td>{{userName}}</td>
+          <td>{{formatDateBirth}}</td>
+          <td>{{isAdmin}}</td>
+          <td><a href="/user/edit/{{id}}" class="btn btn-primary" role="button">Editar</a><a href="/user/delete/{{id}}" class="btn btn-warning" role="button">Esborrar</a></td>      
+        </tr>  
+        {{/each}}
+      </tbody>
+    </table>
+</div>
+

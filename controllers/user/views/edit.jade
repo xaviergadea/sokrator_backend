@@ -1,0 +1,17 @@
+h1 Editar Usuario
+ 
+form(method="POST", action="/user/" + userview._id)
+ 
+  p Nombre:
+    input(type="text" name="name", value=userview.name)
+ 
+  p Fecha de nacimiento:
+    input(type="date" name="birthdate", value=data.format("YYYY-MM-DD"))
+ 
+  p ¿Es administrador?:
+    input(type="checkbox" name="isAdmin", checked=userview.isAdmin)
+ 
+  input(type="hidden" name="_method" value="put")
+ 
+  p
+    button(type="submit") Enviar
