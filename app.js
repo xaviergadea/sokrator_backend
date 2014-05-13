@@ -176,9 +176,9 @@ function getApps2(fitxer){
 
 
 // development only
-if ('development' == app.get('env')) {
+/*if ('development' == app.get('env')) {
   app.use(express.errorHandler());
-}
+}*/
 
 // rutas
 app.use(home);
