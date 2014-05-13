@@ -1,0 +1,8 @@
+logs/*
+!.gitkeep
+node_modules/
+frontend/node_modules/
+bower_components/
+tmp
+.DS_Store
+.idea
