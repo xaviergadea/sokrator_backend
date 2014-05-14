@@ -3,7 +3,7 @@
  * Module dependencies.
  */
 
-var express = require('express');
+var express = require('express'), cors = require('cors');
 var exphbs  = require('express3-handlebars');
 var http = require('http');
 var path = require('path');
@@ -56,7 +56,7 @@ app.configure(function() {
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(express.cookieParser());
   app.use(express.bodyParser());
-  //app.use(express.session({ secret: 'sokratorSecret' }));
+  app.use(cors());
   app.use(express.session({
     secret:'sokratorSecret',
     cookie: {maxAge: 60000 * 60 * 24 * 30}, // 30 days
