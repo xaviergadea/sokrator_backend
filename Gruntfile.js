@@ -12,7 +12,7 @@ module.exports = function(grunt) {
             tasks: ['clean:dev', 'browserify:app', 'concat', 'copy:dev']
         },
         scripts: {
-            files: ['client/templates/*.hbs', 'client/src/**/*.js'],
+            files: ['client/controllers/**/.js', 'client/src/**/*.js','client/controllers/skapps/**/.js'],
             tasks: ['clean:dev', 'browserify:app', 'concat', 'copy:dev']
         },
         less: {

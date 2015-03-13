@@ -48,20 +48,29 @@ app.get('/AuserREST/:id',cors(), function(req, res) {
 });
 app.post('/newuserREST', function(req, res) { 
 
-  var u = req.body;
-  var naix=u.birthdate;
-  var naixArr=naix.split("/");
-  naix=naixArr[2]+"/"+naixArr[1]+"/"+naixArr[0];
+   var u = req.body;
     
-  // podemos acceder a DB sin hacer 
-  // require porque es global
-  var newUser = new db.User({
-    name: u.name,
-    userName: u.userName,
-    userPwd: u.userPwd,
-    birthdate: naix,
-    isAdmin: u.isAdmin === 'on' ? true : false
+   /*var naix=u.birthdate;
+   var naixArr=naix.split("/");
+   naix=naixArr[2]+"/"+naixArr[1]+"/"+naixArr[0];
+ */
+ 	naix="1971/01/01"
+   var bgImg="";
+   
+   var newUser = new db.User({
+    name : u.name, // tipo de dato cadena de caracteres
+    userName : u.userName,
+    userPwd : u.userPwd,
+    birthdate : naix, // tipo de dato fecha
+    isAdmin : -1, // tipo de dato buleano
+	photo : "",
+	bgImg : "",
+	userApp : "",
+	userAppPosition : "",
+	UserFavourites : "",
+	UserRSSDirections : "" 	
   });
+  
   newUser.save(function(error, user) {
     
     if (error) res.json(error);
@@ -89,19 +98,43 @@ app.get('/deleteuserREST/:id', function(req, res) {
       });
     })
 });
-app.post('/edituserREST/:id', function(req, res) {
+app.post('/edituserREST/:id',cors(), function(req, res) {
  
+ 
+	
+	
+	var path = require('path'),
+    fs = require('fs');
+	if (req.files.file) {
+		var extension=req.files.file.name;
+		var fileArr=extension.split(".");
+		extension=fileArr[1];
+		var nameArx=req.params.id + "." + extension;
+		var tempPath = req.files.file.path,
+			targetPath = path.resolve('./public/images/members/' + nameArx);
+		fs.rename(tempPath, targetPath, function(err) {
+			if (err) res.json({"error":"1"});
+		});
+	} else {
+		var nameArx="";
+	}
+
    var user = req.body,
    userId = req.params.id;    
     
    var naix=user.birthdate;
    var naixArr=naix.split("/");
    naix=naixArr[2]+"/"+naixArr[1]+"/"+naixArr[0];
-   user.birthdate=naix;
-    delete user.id;
-    delete user._id;
+   var name=user.name;
+   var userName=user.userName;
+   var userPwd=user.userPwd;
+   var bgImg=user.bgImg;
+   
+   
+   //delete user.id;
+   //delete user._id;
     
-    db
+    /*db
     .User
     .findByIdAndUpdate(userId, user, function (error, users) {
 
@@ -109,10 +142,182 @@ app.post('/edituserREST/:id', function(req, res) {
 
     res.json({text: 'Ok'});
 
+    });*/
+	db
+    .User
+    .findById(userId, function (error, user) {
+	
+    if (error) return res.json(error);
+	
+	user.name=name;
+    user.userName=userName;
+    user.userPwd=userPwd;
+    user.birthdate=naix;
+	if (nameArx!="") { user.photo=nameArx; }
+	if (bgImg!="") { user.bgImg=bgImg; }
+	
+	user.save(res.json(user));
+    
+
     });
  
 });
-
+app.get('/deleteApp/:id/:app', function(req, res) {
+ 
+   userId = req.params.id;    
+   app=req.params.app;   
+  
+ 
+  db
+	.User
+	.find( { '_id':userId,'userApp.app': app  }, { "userApp.$" : "1" }, function (error, app) {
+		if(Object.keys(app).length>0){
+			app[0].userApp[0].remove();
+			app[0].save(function (err) {
+				res.json({text: err});			  
+			});
+		}
+		
+	});
+ 
+});
+app.get('/userSaveApp/:id/:app/:token/:refresh_token', function(req, res) {
+ 
+   userId = req.params.id;    
+   app=req.params.app;
+   token=req.params.token;
+   refresh_token=req.params.refresh_token.replace("--|","/");
+   // delete user.id.userApp;
+  
+  var newUserApp = new db.UserApp({
+    app: app,
+    token: token,
+	refresh_token: refresh_token,
+	appkey: app,
+	param1: ""
+  });
+  
+  
+   userId = req.params.id;    
+   app=req.params.app;
+   appkey=req.params.app;
+   refresh_token=refresh_token;
+  
+ 
+  db
+	.User
+	.find( { '_id':userId,'userApp.app': app }, { "userApp.$" : "1" }, function (error, app) {
+		if (!error) {
+			
+			if(Object.keys(app).length>0){
+				app[0].userApp[0].remove();
+				app[0].save();
+			}
+			
+		}
+		//res.json(error);
+	});
+   db
+  .User
+  .findById(userId, function (error, user) {
+ 
+   user.userApp.push(newUserApp);
+	   user.save(function(error, user) {
+		
+		if (error) res.json(error);
+	 
+	   res.json(user);
+	 
+	  });
+  });
+  
+});
+app.get('/userSaveApp/:id/:app/:token/:refresh_token/:param1/:param2/:param3', function(req, res) {
+ 
+   userId = req.params.id;    
+   app=req.params.app;
+   token=req.params.token;
+   refresh_token=req.params.refresh_token.replace("--|","/");
+   // delete user.id.userApp;
+  
+  var newUserApp = new db.UserApp({
+    app: app,
+    token: token,
+	refresh_token: refresh_token,
+	appkey: app,
+	param1: decodeURIComponent(req.params.param1),
+	param2: decodeURIComponent(req.params.param2),
+	param3: decodeURIComponent(req.params.param3)
+  });
+  
+  //res.json(newUserApp);
+  db
+	.User
+	.find( { '_id':userId,'userApp.app': app }, { "userApp.$" : "1" }, function (error, app) {
+		if (!error) {
+			
+			if(Object.keys(app).length>0){
+				app[0].userApp[0].remove();
+				app[0].save();
+			}
+			
+		}
+		//res.json(error);
+	});
+   db
+  .User
+  .findById(userId, function (error, user) {
+ 
+   user.userApp.push(newUserApp);
+	   user.save(function(error, user) {
+		
+		if (error) res.json(error);
+	 
+	   res.json(user);
+	 
+	  });
+  });
+  
+});
+app.get('/setAppPosition/:id/:app/:position', function(req, res) {
+ 
+   userId = req.params.id;    
+   app=req.params.app;
+   position=req.params.position;
+   // delete user.id.userApp;
+  
+  var newUserAppPosition = new db.userAppPosition({
+    app: app,
+    position: position
+  });
+        
+  db
+	.User
+	.find( { '_id':userId,'userAppPosition.position': position }, { "userAppPosition.$" : "1" }, function (error, app) {
+		if (!error) {
+			if(Object.keys(app).length>0){
+				app[0].userAppPosition[0].remove();
+				app[0].save();
+			}
+			
+		}
+		res.json(error);
+	});
+   db
+  .User
+  .findById(userId, function (error, user) {
+ 
+  user.userAppPosition.push(newUserAppPosition);
+	   user.save(function(error, user) {
+		
+		if (error) res.json(error);
+	 
+	   res.json(user);
+	 
+	  });
+  });
+  
+});
 app.get('/user',function(request,response){       
     db
       .User
@@ -216,4 +421,124 @@ app.get('/user/logout',function(req,res){
    req.logout();
    delete req.session.userActual;
    res.redirect('/');
+});
+
+
+app.get('/userSaveFavourite/:id/:Favname/:FavLink/:FavCategory', function(req, res) {
+ 
+  userId = req.params.id;    
+  category = req.params.FavCategory;
+  var newUserFavourite = new db.UserFavourites({
+    app: app,
+    Favname : req.params.Favname,	  
+	Favlink: req.params.FavLink,
+	UserFavouriteCategory: category	  });
+  
+   db
+  .User
+  .findById(userId, function (error, user) {
+ 
+	user.UserFavourites.push(newUserFavourite);
+	user.save(function(error, user) {	
+		if (error) res.json(error);	 
+		res.json(user);	 	
+	});
+  });
+  
+});
+app.get('/userSaveEditFavourite/:id/:idFav/:Favname/:FavLink/:FavCategory', function(req, res) {
+ 
+	var userId = req.params.id;  
+	var itemId= req.params.idFav;   
+	var category = req.params.FavCategory;
+	var favlink=req.params.FavLink;
+	var nomlink=req.params.Favname;
+	db.User.update(
+		{ _id: userId , "UserFavourites._id":itemId },
+		{ $set:{ "UserFavourites.$.Favname":nomlink,
+				 "UserFavourites.$.Favlink":favlink,
+				 "UserFavourites.$.UserFavouriteCategory":category
+		} },
+		{ upsert: true }, 
+		function(err){
+			if(err) res.json({"no_elements22":err});
+			else res.json("ok");	
+		}
+	);
+	
+});
+app.get('/userDeleteFavourite/:id/:id_favourite', function(req, res) {
+ 
+   userId = req.params.id;    
+   idfav=req.params.id_favourite;   
+    
+   db
+	.User
+	.find({"_id":userId,'UserFavourites._id': idfav},{ "UserFavourites.$" : "1" }, function (error, user) {
+		user[0].UserFavourites[0].remove();
+		user[0].save(function (err) {
+			if (err) res.json({text: err});	
+			res.json({"response":"ok"});		  
+		});
+		res.json({"response":"ok"});
+	});
+  
+});
+app.get('/userSaveFavouriteCategory/:id/:Categoryname', function(req, res) {
+ 
+  userId = req.params.id;    
+  category = req.params.Categoryname;
+  var  newCategory = new db.UserFavouritesCategory({
+    FavCategory : category  
+  });
+  
+   db
+  .User
+  .findById(userId, function (error, user) {
+ 
+	user.UserFavouritesCategory.push(newCategory);
+	user.save(function(error, user) {	
+		if (error) res.json(error);	 
+		res.json(user);	 	
+	});
+  });
+  
+});
+app.get('/userSaveRSS/:id/:rssname/:rsslink', function(req, res) {
+ 
+  userId = req.params.id;    
+  
+  var newUserRSSDirections = new db.UserRSSDirections({
+    url : req.params.rsslink,	  
+	name: req.params.rssname,
+	active:-1
+  });
+  
+   db
+  .User
+  .findById(userId, function (error, user) {
+ 
+	user.UserRSSDirections.push(newUserRSSDirections);
+	user.save(function(error, user) {	
+		if (error) res.json(error);	 
+		res.json(user);	 	
+	});
+  });
+  
+});
+app.get('/userDeleteRSS/:id/:id_favourite', function(req, res) {
+ 
+   userId = req.params.id;    
+   idfav=req.params.id_favourite;   
+    
+   db
+	.User
+	.find({"_id":userId,'UserFavourites._id': idfav},{ "UserFavourites.$" : "1" }, function (error, user) {
+		user[0].UserFavourites[0].remove();
+		user[0].save(function (err) {
+			res.json({text: err});			  
+		});
+		res.json({"response":"ok"});
+	});
+  
 });

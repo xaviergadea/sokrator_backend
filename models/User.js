@@ -5,40 +5,55 @@ var passportLocalMongoose = require('passport-local-mongoose');
 module.exports = function(mongoose) {
  
   var Schema = mongoose.Schema;
- 
-  // Objeto modelo de Mongoose
-  var UserSchema = new Schema({
- 
-    // Propiedad nombre
+  
+   var UserFavouritesCategorySchema = new Schema({ 
+	  FavCategory : String
+  });
+  var UserFavouritesSchema = new Schema({ 
+	  Favname : String,	  
+	  Favlink: String,
+	  UserFavouriteCategory : Number
+  });
+  
+  var UserAppSchema = new Schema({ 
+	  app : String,
+	  token : String,	  
+	  appkey : String,
+	  refresh_token: String,
+	  param1: String,
+	  param2: String,
+	  param3: String
+  });
+  var UserAppPositionSchema = new Schema({ 
+	  app : String,	  
+	  position: Number
+  });
+  var UserRSSDirectionsSchema = new Schema({ 
+	  url : String,	  
+	  name: String,
+	  active : Boolean
+  });
+  var UserSchema = new Schema({ 
     name : String, // tipo de dato cadena de caracteres
-    
-    //Email
     userName : String,
     userPwd : String,
-      
-    // Propiedad fecha de nacimiento
     birthdate : Date, // tipo de dato fecha
- 
-    isAdmin : Boolean // tipo de dato buleano
- 
+    isAdmin : Boolean, // tipo de dato buleano
+	photo : String,
+	bgImg : String,
+	userApp : [UserAppSchema],
+	userAppPosition : [UserAppPositionSchema],
+	UserFavourites : [UserFavouritesSchema],
+	UserRSSDirections : [UserRSSDirectionsSchema],
+	UserFavouritesCategory : [UserFavouritesCategorySchema]	  
   });
- 
+  
 
 UserSchema.methods.validPassword = function( pwd ) {
     // EXAMPLE CODE!
     return ( this.userPwd === pwd );
 };
    
-//var UserSchema = new mongoose.Schema({});
-
-//UserSchema.plugin(passportLocalMongoose);
-
-
-
-//var UserModel = mongoose.model('user', UserSchema);
-
-//module.exports = UserModel;
-
 // metodo para calcular la edad a partir de la fecha de nacimiento
   UserSchema.methods.formatDateBirth = function() {
     var moment = require("moment");

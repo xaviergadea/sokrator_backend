@@ -1,0 +1,257 @@
+{
+  "Presentacions": {
+	"appkey":"PR",
+	"appR":"1",
+    "name":"Eines PMB",
+    "image": "icEines.png",
+	"template" : "EinesPR.html",
+    "description": "Conjunt d'eines online",
+	"appsRec": {
+		"Symbaloo" : {
+			"nameR":"Symbaloo",
+			"imageR": "icSymbaloo.png",
+			"linkR":"http://www.symbaloo.com/home/mix/13eOhCQBIC",
+			"descriptionR": "Symbaloo es una plataforma en la nube que permite guardar tus páginas web favoritas, videos, artículos, feeds y mucho más."
+		},
+		"Pearltrees" : {
+			"nameR":"Pearltrees",
+			"imageR": "icPearltrees.png",
+			"linkR":"http://www.pearltrees.com/",
+			"descriptionR": "Pearltrees, un servicio de marcadores sociales muy visual."
+		},
+		"Dipity" : {
+			"nameR":"Dipity",
+			"imageR": "icDipity.png",
+			"linkR":"http://www.dipity.com/pequod/",
+			"descriptionR": "Dipity es una aplicación gratuita que permite la creación de líneas del tiempo interactivas."
+		},
+		"Cacoo" : {
+			"nameR":"Cacoo",
+			"imageR": "icCacoo.png",
+			"linkR":"https://cacoo.com/diagrams/",
+			"descriptionR": "Cacoo es una herramienta para crear diagramas de forma online colaborativamente con otros usuarios."
+		},
+		"Delicious" : {
+			"nameR":"Delicious",
+			"imageR": "icDelicious.png",
+			"linkR":"https://delicious.com/",
+			"descriptionR": "Servicio de gestión de marcadores sociales en web."
+		},
+		"Prezi" : {
+			"nameR":"Prezi",
+			"imageR": "icPrezi.png",
+			"linkR":"http://prezi.com/your/",
+			"descriptionR": "Herramienta que permite elaborar presentaciones que van más allá de un Power Point."
+		}
+		
+	}
+  },
+   "Blogs": {
+	"appkey":"BL",
+	"appR":"1",
+    "name":"Blocs del centre",
+    "image": "icBlogs.png",
+	"template" : "EinesBL.html",
+    "description": "Conjunt de Blocs del centre",
+	"appsRec": {
+		"Badabadoc" : {
+			"nameR":"Badabadoc",
+			"imageR": "icBlogs.png",
+			"linkR":"http://www.santgervasi.org/blogs/parvulari/",
+			"descriptionR": "El bloc de parvulari"
+		},
+		"Espacial" : {
+			"nameR":"El Bloc Espacial",
+			"imageR": "icBlogs.png",
+			"linkR":"http://www.santgervasi.org/blogs/cicleinicial/",
+			"descriptionR": "El bloc de cicle inicial"
+		},
+		"Badacontes" : {
+			"nameR":"Badacontes",
+			"imageR": "icBlogs.png",
+			"linkR":"http://santgervasi.org/blogs/ciclemitja/",
+			"descriptionR": "El bloc de cicle mitjà"
+		},
+		"Edukids" : {
+			"nameR":"Edukids",
+			"imageR": "icBlogs.png",
+			"linkR":"http://santgervasi.org/blogs/ciclesuperior/",
+			"descriptionR": "El bloc de cicle superior"
+		},
+		"Musica" : {
+			"nameR":"Música",
+			"imageR": "icBlogs.png",
+			"linkR":"http://santgervasi.org/musica/",
+			"descriptionR": "El bloc de l'escola de Música"
+		}
+	}
+  },
+  "Buscar": {
+	"appkey":"BU",
+	"appR":"1",
+    "name":"Eines Buscar",
+    "image": "icBusca.png",
+	"template" : "EinesBU.html",
+    "description": "Conjunt d'eines per buscar informació",
+	"appsRec": {
+		"Google_Academico" : {
+			"nameR":"Google Acadèmic",
+			"imageR": "icGoogleAcademico.png",
+			"linkR":"http://scholar.google.es/",
+			"descriptionR": "Google Acadèmic és un buscador de Google especialitzat en artícles de revistes científiques, enfocat al món acadèmic"
+		},
+		"Wikipedia" : {
+			"nameR":"Wikipedia",
+			"imageR": "icWikipedia.png",
+			"linkR":"http://ca.wikipedia.org/",
+			"descriptionR": "Enciclopèdia de contingut lliure que tothom pot millorar"
+		},
+		"YouTube" : {
+			"nameR":"YouTube",
+			"imageR": "icYouTube.png",
+			"linkR":"https://www.youtube.com/",
+			"descriptionR": "YouTube és un lloc web en el qual els usuaris poden pujar i compartir vídeos"
+		},
+		"Jamendo" : {
+			"nameR":"Jamendo",
+			"imageR": "icJamendo.png",
+			"linkR":"https://www.jamendo.com/es",
+			"descriptionR": "Jamendo és una plataforma musical i una comunitat d'àmbit internacional"
+		},
+		"SoundCloud" : {
+			"nameR":"SoundCloud",
+			"imageR": "icSoundCloud.png",
+			"linkR":"https://soundcloud.com/",
+			"descriptionR": "SoundCloud és una xarxa social per a músics, punxa-discos i productors, on disposen de canals per a la distribució de la seva música"
+		},
+		"FlickrCC" : {
+			"nameR":"FlickrCC",
+			"imageR": "icFlickrCC.png",
+			"linkR":"https://www.flickr.com",
+			"descriptionR": "Flickr és un lloc web gratuït que funciona com a una xarxa social, i que permet emmagatzemar, ordenar, buscar, vendre i compartir fotografies i vídeos en línia."
+		},
+		"KHAN_Academy" : {
+			"nameR":"KHAN Academy",
+			"imageR": "icKhan.png",
+			"linkR":"https://www.khanacademy.org/",
+			"descriptionR": "La Khan Academy és una organització educativa sense ànim de lucre fundada per Salman Khan l'any 2008 amb l'objectiu d'oferir una educació mundial gratuïta per a tots, en qualsevol lloc"
+		},
+		"Pinterest" : {
+			"nameR":"Pinterest Academy",
+			"imageR": "icPinterest.png",
+			"linkR":"https://www.pinterest.com/",
+			"descriptionR": "Pinterest és una xarxa social que permet trobar, filtrar, organitzar i compartir imatges i vídeos que hi ha a Internet"
+		}
+	}
+  },
+  "ServeiTecnic": {
+	"appkey":"ST",
+	"appR":"1",
+    "name":"Servicio técnico",
+    "image": "icSat.png",
+	"template" : "EinesST.html",
+    "description": "Herramientas",
+	"appsRec": {
+		"Bitdefender" : {
+			"nameR":"Bitdefender",
+			"imageR": "icBitdefender.png",
+			"linkR":"http://cloud.bitdefender.net/",
+			"descriptionR": "Cloud Security Console"
+		},
+		"Alphacontrol" : {
+			"nameR":"Alphacontrol",
+			"imageR": "icAlphacontrol.png",
+			"linkR":"http://acontrol.atera.com/Login.aspx",
+			"descriptionR": "Monitorización y gestion de redes"
+		},
+		"Meraki" : {
+			"nameR":"Cisco Meraki",
+			"imageR": "icMeraki.png",
+			"linkR":"https://dashboard.meraki.com/",
+			"descriptionR": "Cloud-based Enterprise Mobility Management"
+		},
+		"Avira" : {
+			"nameR":"Avira",
+			"imageR": "icAvira.png",
+			"linkR":"http://www.avira.com/es/avira-protection-cloud",
+			"descriptionR": "Avira Console"
+		},
+		"Iberent" : {
+			"nameR":"Iberent",
+			"imageR": "icIberent.png",
+			"linkR":"http://www.iberent.es",
+			"descriptionR": "Renting tecnológico"
+		},
+		"Evoz" : {
+			"nameR":"Evoz",
+			"imageR": "icEvoz.png",
+			"linkR":"http://www.evoz.es",
+			"descriptionR": "Conectividad y voz IP"
+		},
+		"AviraOnlineEssentials" : {
+			"nameR":"Avira Online Essentials",
+			"imageR": "icAvira.png",
+			"linkR":"https://my.avira.com/en/auth/login",
+			"descriptionR": "Avira Online Essentials"
+		}
+	}
+  },
+  "UniversStGervasi": {
+	"appkey":"UG",
+	"appR":"1",
+    "name":"Univers Sant Gervasi",
+    "image": "icStgervasi.png",
+	"template" : "EinesUG.html",
+    "description": "Univers Sant Gervasi",
+	"appsRec": {
+		"AaWeb" : {
+			"nameR":"Escola Sant Gervasi",
+			"imageR": "icStgervasi.png",
+			"linkR":"http://www.santgervasi.org/",
+			"descriptionR": "Web de l'Escola Sant Gervasi"
+		},
+		"AbWebFC" : {
+			"nameR":"Àrea de qualificacions professionals",
+			"imageR": "icStgervasi.png",
+			"linkR":"http://www.santgervasifc.com",
+			"descriptionR": "Web de Sant Gervasi àrea de qualificacions professionals"
+		},
+		"AcWebIUCT" : {
+			"nameR":"Institut universitari de ciència i tecnologia",
+			"imageR": "icIUCT.png",
+			"linkR":"http://www.iuct.com",
+			"descriptionR": "Web de l' Institut universitari de ciència i tecnologia"
+		},
+		"AdWebGlobal" : {
+			"nameR":"Global",
+			"imageR": "icGlobal.png",
+			"linkR":"http://www.global-ss.org",
+			"descriptionR": "Web de Global"
+		},
+		"AcWebFarmaQ" : {
+			"nameR":"Farma Química",
+			"imageR": "icFarmaquimica.png",
+			"linkR":"http://www.farmaquimica.org",
+			"descriptionR": "Fem bona química amb l'ocupació"
+		},
+		"AeBasquet" : {
+			"nameR":"Club de Basquet",
+			"imageR": "icBasquet.png",
+			"linkR":"http://www.santgervasi.org/botonssuperiors/actualitat/curs1314/basquet2/index.html",
+			"descriptionR": "Club de Bàsquet Escola Sant Gervasi"
+		},
+		"AfBiblioteca" : {
+			"nameR":"Biblioteca online",
+			"imageR": "icBiblioteca.png",
+			"linkR":"http://213.0.19.187/biblioteca/index.htm",
+			"descriptionR": "Biblioteca online de l'Escola"
+		},
+		"AgAmpa" : {
+			"nameR":"AMPA Escola Sant Gervasi",
+			"imageR": "icAmpagervasi.png",
+			"linkR":"http://www.santgervasi.org/ampa/ampa2.htm",
+			"descriptionR": "Web de l'AMPA"
+		}
+	}
+  }
+}
