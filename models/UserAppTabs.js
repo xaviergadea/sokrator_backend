@@ -6,11 +6,10 @@ module.exports = function(mongoose) {
  
   var Schema = mongoose.Schema;
  
-  var userAppPositionSchema = new Schema({ 
-  	app : String,	  
-	position: Number,
-	tab : String  
+  var UserAppTabsSchema = new Schema({ 
+  	tab : String,	  
+	position: Number	 
   });
   
-  return mongoose.model('userAppPosition', userAppPositionSchema);
+  return mongoose.model('UserAppTabs', UserAppTabsSchema);
 }

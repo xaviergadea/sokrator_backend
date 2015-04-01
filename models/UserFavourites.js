@@ -8,7 +8,7 @@ module.exports = function(mongoose) {
   var UserFavouritesSchema = new Schema({ 
 	Favname : String,	  
 	Favlink: String	,
-	UserFavouriteCategory : Number
+	UserFavouriteCategory : String
   });
   
   return mongoose.model('UserFavourites', UserFavouritesSchema);

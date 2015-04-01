@@ -17,7 +17,7 @@ app.use(readline);
 app.get('/oauthFacebook/:id', function(req,res,done) {
 	 var authUrl = graph.getOauthUrl({
         "client_id":     secrets.facebook.clientID
-      , "redirect_uri":  'http://v1.sokrato.me/index.html',
+      , "redirect_uri":  'http://v2.sokrato.me/index.html',
 	    "scope" : 'user_about_me, read_stream'
     });
 
@@ -27,17 +27,20 @@ app.get('/oauthFacebook/:id', function(req,res,done) {
 app.get('/oauth2callbackFacebook/:code', function(req,res) {
 	graph.authorize({
         "client_id": secrets.facebook.clientID
-      , "redirect_uri":   'http://v1.sokrato.me/index.html'
+      , "redirect_uri":   'http://v2.sokrato.me/index.html'
       , "client_secret":  secrets.facebook.clientSecret
       , "code":           req.params.code
     }, function (err, facebookRes) {
-			graph.extendAccessToken({
-				"access_token": facebookRes.access_token
-			  , "client_id": secrets.facebook.clientID
-			  , "client_secret": secrets.facebook.clientSecret
-			}, function (err, facebookResExtended) {
-			   res.json(facebookResExtended);
-			});
+			if (err) { res.json(err) } else {
+				graph.extendAccessToken({
+					"access_token": facebookRes.access_token
+				  , "client_id": secrets.facebook.clientID
+				  , "client_secret": secrets.facebook.clientSecret
+				}, function (err, facebookResExtended) {
+				   if (err) { res.json(err) }
+				   else { res.json(facebookResExtended);}
+				});
+			}
       //res.json(facebookRes);
     });
 	

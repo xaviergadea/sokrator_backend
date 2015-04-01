@@ -12,7 +12,7 @@ module.exports = function(mongoose) {
   var UserFavouritesSchema = new Schema({ 
 	  Favname : String,	  
 	  Favlink: String,
-	  UserFavouriteCategory : Number
+	  UserFavouriteCategory : String
   });
   
   var UserAppSchema = new Schema({ 
@@ -26,7 +26,12 @@ module.exports = function(mongoose) {
   });
   var UserAppPositionSchema = new Schema({ 
 	  app : String,	  
-	  position: Number
+	  position: Number,
+	  tab : String
+  });
+  var UserAppTabsSchema = new Schema({ 
+	  tab : String,	  
+	  position: Number	 
   });
   var UserRSSDirectionsSchema = new Schema({ 
 	  url : String,	  
@@ -43,6 +48,7 @@ module.exports = function(mongoose) {
 	bgImg : String,
 	userApp : [UserAppSchema],
 	userAppPosition : [UserAppPositionSchema],
+	UserAppTabs : [UserAppTabsSchema],
 	UserFavourites : [UserFavouritesSchema],
 	UserRSSDirections : [UserRSSDirectionsSchema],
 	UserFavouritesCategory : [UserFavouritesCategorySchema]	  

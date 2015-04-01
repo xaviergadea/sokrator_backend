@@ -30,8 +30,10 @@ app.get("/getRSSList/:id",function(req,res){
 		if (app) {
 			
 			feed(app[0].UserRSSDirections[0].url, function(err, articles) {
-				if (err) res.json(err);					  
-				res.json(articles);							
+				if (err) {res.json(err); } else {
+				articles[0]["titRSSView"]=app[0].UserRSSDirections[0].name;
+				res.json(articles);				
+				}
 			});
 		}
 	});

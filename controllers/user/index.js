@@ -15,153 +15,12 @@ app.get('/user/new', function(request, response) {
   response.render('new');
  
 });
-app.get('/AuserREST',cors(), function(req, res) {
-    //res.header("Access-Control-Allow-Origin", "http://localhost:8000");
-	//res.header("Access-Control-Allow-Methods", "GET, POST");
-    db
-      .User
-      .find()
-      .exec(function (error, users) {
 
-        if (error) return res.json(error);
-    
-        res.json(users);
 
-      });
- 
-});
-app.get('/AuserREST/:id',cors(), function(req, res) {
-    
-    var userId = req.params.id;    
- 
-      db
-      .User
-      .findById(userId, function (error, user) {
+/*************************************************************************************************************
+/**************************GESTIÓ APLICACIONS RELACIONADES AMB USUARI*****************************************
+**************************************************************************************************************/
 
-        if (error) return response.json(error);
-
-        //var now = moment(user.birthdate);   
-        res.json(user);
-
-      });
- 
-});
-app.post('/newuserREST', function(req, res) { 
-
-   var u = req.body;
-    
-   /*var naix=u.birthdate;
-   var naixArr=naix.split("/");
-   naix=naixArr[2]+"/"+naixArr[1]+"/"+naixArr[0];
- */
- 	naix="1971/01/01"
-   var bgImg="";
-   
-   var newUser = new db.User({
-    name : u.name, // tipo de dato cadena de caracteres
-    userName : u.userName,
-    userPwd : u.userPwd,
-    birthdate : naix, // tipo de dato fecha
-    isAdmin : -1, // tipo de dato buleano
-	photo : "",
-	bgImg : "",
-	userApp : "",
-	userAppPosition : "",
-	UserFavourites : "",
-	UserRSSDirections : "" 	
-  });
-  
-  newUser.save(function(error, user) {
-    
-    if (error) res.json(error);
- 
-   res.json({text: 'Ok'});
- 
-  });
-});
-app.get('/deleteuserREST/:id', function(req, res) {
-    userId = req.params.id;    
-
-    db.User.findByIdAndRemove(userId, function (error, users) {
- 
-    if (error) return res.json(error);
- 
-     db
-      .User
-      .find()
-      .exec(function (error, users) {
-
-        if (error) return res.json(error);
-    
-        res.json(users);
-
-      });
-    })
-});
-app.post('/edituserREST/:id',cors(), function(req, res) {
- 
- 
-	
-	
-	var path = require('path'),
-    fs = require('fs');
-	if (req.files.file) {
-		var extension=req.files.file.name;
-		var fileArr=extension.split(".");
-		extension=fileArr[1];
-		var nameArx=req.params.id + "." + extension;
-		var tempPath = req.files.file.path,
-			targetPath = path.resolve('./public/images/members/' + nameArx);
-		fs.rename(tempPath, targetPath, function(err) {
-			if (err) res.json({"error":"1"});
-		});
-	} else {
-		var nameArx="";
-	}
-
-   var user = req.body,
-   userId = req.params.id;    
-    
-   var naix=user.birthdate;
-   var naixArr=naix.split("/");
-   naix=naixArr[2]+"/"+naixArr[1]+"/"+naixArr[0];
-   var name=user.name;
-   var userName=user.userName;
-   var userPwd=user.userPwd;
-   var bgImg=user.bgImg;
-   
-   
-   //delete user.id;
-   //delete user._id;
-    
-    /*db
-    .User
-    .findByIdAndUpdate(userId, user, function (error, users) {
-
-    if (error) return res.json(error);
-
-    res.json({text: 'Ok'});
-
-    });*/
-	db
-    .User
-    .findById(userId, function (error, user) {
-	
-    if (error) return res.json(error);
-	
-	user.name=name;
-    user.userName=userName;
-    user.userPwd=userPwd;
-    user.birthdate=naix;
-	if (nameArx!="") { user.photo=nameArx; }
-	if (bgImg!="") { user.bgImg=bgImg; }
-	
-	user.save(res.json(user));
-    
-
-    });
- 
-});
 app.get('/deleteApp/:id/:app', function(req, res) {
  
    userId = req.params.id;    
@@ -279,7 +138,7 @@ app.get('/userSaveApp/:id/:app/:token/:refresh_token/:param1/:param2/:param3', f
   });
   
 });
-app.get('/setAppPosition/:id/:app/:position', function(req, res) {
+/*app.get('/setAppPosition/:id/:app/:position', function(req, res) {
  
    userId = req.params.id;    
    app=req.params.app;
@@ -317,6 +176,192 @@ app.get('/setAppPosition/:id/:app/:position', function(req, res) {
 	  });
   });
   
+});*/
+app.get('/setAppPosition/:id/:app/:position/:activetab', function(req, res) {
+ 
+   userId = req.params.id;    
+   app=req.params.app;
+   position=req.params.position;
+   activetab=req.params.activetab;
+   // delete user.id.userApp;
+  
+  var newUserAppPosition = new db.userAppPosition({
+    app: app,
+    position: position,
+	tab:activetab
+  });
+  for (var i=0;i<5;i++) {
+  
+  	db.User.find( { '_id':userId }, {  }, function (error, app) {
+		if (!error) {				
+			if(Object.keys(app).length>0){
+				var arrData=app[0].userAppPosition;
+				arrData.forEach(function(item) { 
+					if (item.tab==activetab && item.position==position) {						
+						item.remove();
+						app[0].save();						 
+					}
+					
+				});	
+			}
+			
+			
+		}		
+	});
+	
+  }
+ 
+  
+ db
+  .User
+  .findById(userId, function (error, user) {
+ 
+  user.userAppPosition.push(newUserAppPosition);
+	   user.save(function(error, user) {
+		
+		if (error) res.json(error);
+	 
+	  res.json(user);
+	 
+	  });
+  });
+  
+});
+
+/*************************************************************************************************************
+/**************************GESTIÓ DADES PERFIL USUARI*********************************************************
+**************************************************************************************************************/
+
+app.get('/AuserREST',cors(), function(req, res) {
+    //res.header("Access-Control-Allow-Origin", "http://localhost:8000");
+	//res.header("Access-Control-Allow-Methods", "GET, POST");
+    db
+      .User
+      .find()
+      .exec(function (error, users) {
+
+        if (error) return res.json(error);
+    
+        res.json(users);
+
+      });
+ 
+});
+app.get('/AuserREST/:id',cors(), function(req, res) {
+    
+    var userId = req.params.id;    
+ 
+      db
+      .User
+      .findById(userId, function (error, user) {
+
+        if (error) return response.json(error);
+
+        //var now = moment(user.birthdate);   
+        res.json(user);
+
+      });
+ 
+});
+app.post('/newuserREST', function(req, res) { 
+
+   var u = req.body;
+    
+   /*var naix=u.birthdate;
+   var naixArr=naix.split("/");
+   naix=naixArr[2]+"/"+naixArr[1]+"/"+naixArr[0];
+ */
+ 	naix="1971/01/01"
+   var bgImg="";
+   
+   var newUser = new db.User({
+    name : u.name, // tipo de dato cadena de caracteres
+    userName : u.userName,
+    userPwd : u.userPwd,
+    birthdate : naix, // tipo de dato fecha
+    isAdmin : -1, // tipo de dato buleano
+	photo : "",
+	bgImg : "",
+	userApp : "",
+	userAppPosition : "",
+	UserFavourites : "",
+	UserRSSDirections : "" 	
+  });
+  
+  newUser.save(function(error, user) {
+    
+    if (error) res.json(error);
+ 
+   res.json({text: 'Ok'});
+ 
+  });
+});
+app.get('/deleteuserREST/:id', function(req, res) {
+    userId = req.params.id;    
+
+    db.User.findByIdAndRemove(userId, function (error, users) {
+ 
+    if (error) return res.json(error);
+ 
+     db
+      .User
+      .find()
+      .exec(function (error, users) {
+
+        if (error) return res.json(error);
+    
+        res.json(users);
+
+      });
+    })
+});
+app.post('/edituserREST/:id',cors(), function(req, res) {	
+	var path = require('path'),
+    fs = require('fs');
+	if (req.files.file) {
+		var extension=req.files.file.name;
+		var fileArr=extension.split(".");
+		extension=fileArr[1];
+		var nameArx=req.params.id + "." + extension;
+		var tempPath = req.files.file.path,
+			targetPath = path.resolve('./public/images/members/' + nameArx);
+		fs.rename(tempPath, targetPath, function(err) {
+			if (err) res.json({"error":"1"});
+		});
+	} else {
+		var nameArx="";
+	}
+
+   var user = req.body,
+   userId = req.params.id;    
+    
+   var naix=user.birthdate;
+   var naixArr=naix.split("/");
+   naix=naixArr[2]+"/"+naixArr[1]+"/"+naixArr[0];
+   var name=user.name;
+   var userName=user.userName;
+   var userPwd=user.userPwd;
+   var bgImg=user.bgImg;
+   
+     
+	db
+    .User
+    .findById(userId, function (error, user) {
+	
+    if (error) return res.json(error);
+	
+	user.name=name;
+    user.userName=userName;
+    user.userPwd=userPwd;
+    user.birthdate=naix;
+	if (nameArx!="") { user.photo=nameArx; }
+	if (bgImg!="") { user.bgImg=bgImg; }
+	
+	user.save(res.json(user));
+    
+
+    });
+ 
 });
 app.get('/user',function(request,response){       
     db
@@ -423,6 +468,10 @@ app.get('/user/logout',function(req,res){
    res.redirect('/');
 });
 
+/*************************************************************************************************************
+/**************************GESTIÓ FAVORITS RELACIONATS AMB USUARI*********************************************
+**************************************************************************************************************/
+
 
 app.get('/userSaveFavourite/:id/:Favname/:FavLink/:FavCategory', function(req, res) {
  
@@ -504,6 +553,11 @@ app.get('/userSaveFavouriteCategory/:id/:Categoryname', function(req, res) {
   });
   
 });
+
+/*************************************************************************************************************
+/**************************GESTIÓ RSS RELACIONATS AMB USUARI************************************************
+**************************************************************************************************************/
+
 app.get('/userSaveRSS/:id/:rssname/:rsslink', function(req, res) {
  
   userId = req.params.id;    

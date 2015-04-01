@@ -71,7 +71,7 @@ app.get('/oauth2Twittercallback/?', function(req,res,done) {
           //req.session.oauth.access_token = oauth_access_token;
           //req.session.oauth.access_token_secret = oauth_access_token_secret;
           console.log(results, req.session.oauth);
-          res.redirect("http://v1.sokrato.me/#/skconfig/returnAPI/"+APPKEY+"/"+oauth_access_token+"/"+oauth_access_token_secret);
+          res.redirect("http://v2.sokrato.me/skconfig/returnAPI/"+APPKEY+"/"+oauth_access_token+"/"+oauth_access_token_secret);
          
         }
       }

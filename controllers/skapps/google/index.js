@@ -174,8 +174,9 @@ app.get("/GmailCallback?:id", function(req,res) {
 		
 	});
 });*/
-app.get("/getGDriveFiles/:id",function(req,res){
-	var userId = req.params.id;    
+app.get("/getGDriveFiles/:id/:view",function(req,res){
+	var userId = req.params.id;
+	var view = req.params.view; 
 	var CLIENT_ID = secrets.google.clientID,
 	CLIENT_SECRET = secrets.google.clientSecret,
 	REDIRECT_URL = secrets.google.callbackURL,
@@ -190,32 +191,22 @@ app.get("/getGDriveFiles/:id",function(req,res){
 			var auth = new googleapis.OAuth2Client(CLIENT_ID, CLIENT_SECRET, REDIRECT_URL);
 			
 			googleapis.discover('drive', 'v2').execute(function(err, client) {
-					
-				//var listFiles = function() {
-				
 				auth.setCredentials({
 					access_token: user.userApp[0].token,
 					refresh_token: user.userApp[0].refresh_token
 				});
 				
+				if (view=="sharedwithme") { param='sharedWithMe=true'; } else if (view=="favourite") { param='starred=true'; } else {param=""}
 				client.drive.files
-				  .list({'maxResults':10})
+				  .list({'maxResults':60,q:param})
 				  .withAuthClient(auth).execute(function(err, result) {
-					   //var tokensStr=JSON.stringify(err);
-					  //res.redirect("/ok22/"+tokensStr);
 					if (err==null) {
 						res.json(result);	
 					} else {
 						res.json({"error":"token_lost"});	
 					}
 				});
-				  
-				
-				//};
-				
-				//listFiles();
-				
-				//res.json({"a":"b"})
+				  				
 			});
 		}
 	
